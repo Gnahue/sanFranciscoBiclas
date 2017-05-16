@@ -1,0 +1,99 @@
+\documentclass{tcc}
+
+\begin{document}
+\pagestyle{empty} %retira numeração da página
+\input{dados_tcc}
+
+\begin{center}
+\LARGE{\bf INFORME TRABAJO PRÁCTICO 2}\\
+\Large{\bf Competencia de Machine Learning}\\
+\end{center}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics{imagenes/fiuba.png}
+\end{figure}
+
+\begin{center}
+ORGANIZACIÓN DE DATOS - 75.06/95.58 \\
+UNIVERSIDADE DE BUENOS AIRES
+
+\end{center}
+
+\vspace{1in}
+
+\vspace{3em}
+
+\begin{center}
+Maximiliano \\
+Pablo\\
+Galván Nahuel \\
+Prado María Florencia 96626
+\end{center}
+
+\vfill
+\begin{center}
+Primer cuatrimestre, \the\year
+\end{center}
+\newpage
+\begin{center}
+\theauthor
+\end{center}
+\vspace{3in}
+\begin{center}
+\LARGE{\thetitle}\\
+\end{center}
+
+\vspace{2in}
+
+\begin{flushright}
+El propósito de esta competencia es predecir
+la duración \\de viajes en bicicleta en la
+Bahía de San Francisco \\en base al set de datos brindado por Kaggle
+\\
+\vspace{0.2in}
+
+
+
+\end{flushright}
+
+\vfill
+\begin{center}
+Primer cuatrimestre de \the\year
+\end{center}
+
+
+\newpage
+
+%Resumo%
+\input{c_resumen}
+
+
+\newpage
+
+%Sumário%
+\renewcommand*\contentsname{Contenido}
+\pagestyle{plain} %mostra numeração da página%
+\tableofcontents
+
+\newpage
+\input{1_introduccion}
+\input{2_conceptosGenerales}
+\input{3_metodologia}
+\input{4_resultados}
+\input{5_conclusiones}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Referências %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\refname}{\centering REFERENCIAS} %Centraliza nome Referencias%
+\addcontentsline{toc}{section}{REFERENCIAS} %adiciona referencias ao sumario
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{references}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{7_anexos}
+
+\end{document}
