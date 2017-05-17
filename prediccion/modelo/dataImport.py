@@ -9,12 +9,32 @@ def dataImport():
 
 	# weather = pd.read_csv("Data/weather.csv")  	
 	# station = pd.read_csv("Data/station.csv")
-	
 	# tanto weather como station son archivos que nos 
 	# permiten usar para la prediccion, si es necesario
 	# los usaremos
+
+	# Dado a que para el algoritmo solo vamos a manejar variables numericas:
+	# eliminamos la columna de start_station_name y dejamos start_station_id
+	# eliminamos la columna de end_station_name y dejamos start_station_id
+	trip_train.drop(['start_station_name','end_station_name'],inplace=True,axis=1)
+
+
+
+	# # en subscription_type tenemos dos posibles valores, subcriber o customer el primero sera 1 y el segundo 2
+	trip_train["subscription_type"][trip_train["subscription_type"] == "Subscriber"] = 1
+	trip_train["subscription_type"][trip_train["subscription_type"] == "Customer"] = 2
+
+
+	# train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
+
 	return (trip_train,trip_test)
-	
+
+
+(x,y) = dataImport()
+print x.head(20)
+
+
+
 #df['dura_min'] = (df.end_date - df.start_date).dt.seconds - 60
 #df['dura_max'] = df.dura_min + 120
 # trip_train['delta_duration'] = trip_train.duration - (trip_train.end_date - trip_train.start_date).dt.total_seconds()
