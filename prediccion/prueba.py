@@ -19,7 +19,7 @@ df.loc[(df.start_date < '2015-03-08 03:00:00') & (df.end_date > '2015-03-08 03:0
 
 print ("-----------")
 print (df.loc[:,['id','delta_duration']])
-'''
+
 #print (len(df.duration.unique()))
 # Total de viajes
 print (len(df))
@@ -28,7 +28,7 @@ print (len(df[(df.delta_duration <= 60) & (df.delta_duration >= -60)]))
 # Duracion de viajes que caen fuera del rango esperado
 print (len(df[df.delta_duration > 60]))
 print (len(df[df.delta_duration < -60]))
-'''
+
 
 ''' El delta_duration para los viajes que caen fuera del rango es de 
 3600 segundos (1 hora) aprox.
@@ -37,13 +37,12 @@ se adelanto o se atrazo una hora.
 https://www.timeanddate.com/time/change/usa/san-francisco?year=2014
 '''
 
-'''
+
 print ("-----------")
 
 print (df[df.delta_duration > 60].loc[:,['id','duration','start_date','end_date','delta_duration']])
 print ("-----------")
 print (df[df.delta_duration < -60].loc[:,['id','duration','start_date','end_date','delta_duration']])
 #print (df.info())
-'''
 
 df[(df.delta_duration <= 60) & (df.delta_duration >= -60)].groupby('delta_duration').size().plot()
