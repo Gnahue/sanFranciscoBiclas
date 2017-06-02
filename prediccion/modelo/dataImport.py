@@ -17,14 +17,6 @@ def dataImport():
     # permiten usar para la prediccion, si es necesario
     # los usaremos
 
-    # Dado a que para el algoritmo solo vamos a manejar variables numericas:
-    # eliminamos la columna de start_station_name y dejamos start_station_id
-    # eliminamos la columna de end_station_name y dejamos start_station_id
-    trip_train.drop(['start_station_name','end_station_name'],inplace=True,axis=1)
-    trip_test.drop(['start_station_name','end_station_name'],inplace=True,axis=1)
-
-
-
     # # en subscription_type tenemos dos posibles valores, subcriber o customer el primero sera 1 y el segundo 2
     trip_train["subscription_type"][trip_train["subscription_type"] == "Subscriber"] = 1
     trip_train["subscription_type"][trip_train["subscription_type"] == "Customer"] = 2
@@ -34,8 +26,27 @@ def dataImport():
     trip_test["subscription_type"] = trip_test["subscription_type"].astype(int)
 
 
+    trip_train['start_date_weekday'] = trip_train.start_date.dt.weekday
+    trip_train['start_date_month'] = trip_train.start_date.dt.month
+    trip_train['start_date_hour'] = trip_train.start_date.dt.hour
+    
+    
+    trip_test['start_date_weekday'] = trip_test.start_date.dt.weekday
+    trip_test['start_date_month'] = trip_test.start_date.dt.month
+    trip_test['start_date_hour'] = trip_test.start_date.dt.hour
+    
+    
     # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
 
+    # Dado a que para el algoritmo solo vamos a manejar variables numericas:
+    # eliminamos la columna de start_station_name y dejamos start_station_id
+    # eliminamos la columna de end_station_name y dejamos start_station_id
+    trip_train.drop(['start_station_name','end_station_name','id','start_date','end_date','end_station_id'],inplace=True,axis=1)
+    trip_test.drop(['start_station_name','end_station_name','id','start_date','end_date','end_station_id'],inplace=True,axis=1)
+
+
+
+ #   return (trip_train.to_csv('train.csv', sep='\t'),trip_test.to_csv('test.csv',sep='\t'))
     return (trip_train,trip_test)
 
 
