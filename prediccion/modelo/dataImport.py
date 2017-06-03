@@ -1,15 +1,23 @@
 import pandas as pd
 import numpy as np
+import os.path
 
 def dataImport():
-    trip_train = pd.read_csv("../Data/trip_train.csv")
-    trip_train.start_date = pd.to_datetime(trip_train.start_date, format='%m/%d/%Y %H:%M') 
-    trip_train.end_date = pd.to_datetime(trip_train.end_date, format='%m/%d/%Y %H:%M')
+    file_train = "../Data/train.csv"
+    file_test = "../Data/test.csv"
+    if not os.path.isfile(file_train):
+        trip_train = pd.read_csv("../Data/trip_train.csv")
+        trip_train = transform_data(trip_train)
+        trip_train.to_csv(file_train, index=False)
+    else:
+        trip_train = pd.read_csv(file_train)
     
-
-    trip_test = pd.read_csv("../Data/trip_test.csv")
-    trip_test.start_date = pd.to_datetime(trip_test.start_date, format='%m/%d/%Y %H:%M') 
-    trip_test.end_date = pd.to_datetime(trip_test.end_date, format='%m/%d/%Y %H:%M')
+    if not os.path.isfile(file_test):
+        trip_test = pd.read_csv("../Data/trip_test.csv")
+        trip_test = transform_data(trip_test)
+        trip_test.to_csv(file_test, index=False)
+    else:
+        trip_test = pd.read_csv(file_test)
 
     # weather = pd.read_csv("Data/weather.csv")      
     # station = pd.read_csv("Data/station.csv")
@@ -17,72 +25,21 @@ def dataImport():
     # permiten usar para la prediccion, si es necesario
     # los usaremos
 
-    # # en subscription_type tenemos dos posibles valores, subcriber o customer el primero sera 1 y el segundo 2
-    trip_train["subscription_type"][trip_train["subscription_type"] == "Subscriber"] = 1
-    trip_train["subscription_type"][trip_train["subscription_type"] == "Customer"] = 2
-    trip_train["subscription_type"] = trip_train["subscription_type"].astype(int)
-    trip_test["subscription_type"][trip_test["subscription_type"] == "Subscriber"] = 1
-    trip_test["subscription_type"][trip_test["subscription_type"] == "Customer"] = 2
-    trip_test["subscription_type"] = trip_test["subscription_type"].astype(int)
-
-
-    trip_train['start_date_weekday'] = trip_train.start_date.dt.weekday
-    trip_train['start_date_month'] = trip_train.start_date.dt.month
-    trip_train['start_date_hour'] = trip_train.start_date.dt.hour
-    
-    
-    trip_test['start_date_weekday'] = trip_test.start_date.dt.weekday
-    trip_test['start_date_month'] = trip_test.start_date.dt.month
-    trip_test['start_date_hour'] = trip_test.start_date.dt.hour
-    
-    
-    # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
-
-    # Dado a que para el algoritmo solo vamos a manejar variables numericas:
-    # eliminamos la columna de start_station_name y dejamos start_station_id
-    # eliminamos la columna de end_station_name y dejamos start_station_id
-    trip_train.drop(['start_station_name','end_station_name','id','start_date','end_date','end_station_id'],inplace=True,axis=1)
-    trip_test.drop(['start_station_name','end_station_name','id','start_date','end_date','end_station_id'],inplace=True,axis=1)
-
-
-
- #   return (trip_train.to_csv('train.csv', sep='\t'),trip_test.to_csv('test.csv',sep='\t'))
     return (trip_train,trip_test)
 
 
-#(x,y) = dataImport()
-#print x.head(20)
+def transform_data(trip):
+    trip.start_date = pd.to_datetime(trip.start_date, format='%m/%d/%Y %H:%M') 
 
-def dataImportNaiveBayes():
-    (trip_train,trip_test) = dataImport()
-    
-    # Por ahora no se usan, los elimino
-    trip_train.drop(['bike_id','zip_code'],inplace=True,axis=1)
-    trip_test.drop(['bike_id','zip_code'],inplace=True,axis=1)
-    
-    trip_train['end_date_weekday'] = trip_train.end_date.dt.weekday
-    trip_train['start_date_weekday'] = trip_train.start_date.dt.weekday
-    trip_train['end_date_month'] = trip_train.end_date.dt.month
-    trip_train['start_date_month'] = trip_train.start_date.dt.month
-    trip_train['end_date_hour'] = trip_train.end_date.dt.hour
-    trip_train['start_date_hour'] = trip_train.start_date.dt.hour
-    
-    trip_test['end_date_weekday'] = trip_test.end_date.dt.weekday
-    trip_test['start_date_weekday'] = trip_test.start_date.dt.weekday
-    trip_test['end_date_month'] = trip_test.end_date.dt.month
-    trip_test['start_date_month'] = trip_test.start_date.dt.month
-    trip_test['end_date_hour'] = trip_test.end_date.dt.hour
-    trip_test['start_date_hour'] = trip_test.start_date.dt.hour
-    
-    
-    trip_train['delta_duration'] = trip_train.duration - (trip_train.end_date - trip_train.start_date).dt.total_seconds()
-    trip_train['delta_duration'] = trip_train['delta_duration'].apply(np.round).astype(int)
-    
-    trip_train.loc[(trip_train.start_date < '2013-11-03 02:00:00') & (trip_train.end_date > '2013-11-03 02:00:00'), ['delta_duration']] -= 3600
-    trip_train.loc[(trip_train.start_date < '2014-11-02 02:00:00') & (trip_train.end_date > '2014-11-02 02:00:00'), ['delta_duration']] -= 3600
-    trip_train.loc[(trip_train.start_date < '2014-03-09 03:00:00') & (trip_train.end_date > '2014-03-09 03:00:00'), ['delta_duration']] += 3600
-    trip_train.loc[(trip_train.start_date < '2015-03-08 03:00:00') & (trip_train.end_date > '2015-03-08 03:00:00'), ['delta_duration']] += 3600
-    
-    trip_train = trip_train[(trip_train.delta_duration <= 60) & (trip_train.delta_duration >= -60)]
+    trip["subscription_type"][trip["subscription_type"] == "Subscriber"] = 1
+    trip["subscription_type"][trip["subscription_type"] == "Customer"] = 2
+    trip["subscription_type"] = trip["subscription_type"].astype(int)
 
-    return (trip_train,trip_test)
+    trip['start_date_weekday'] = trip.start_date.dt.weekday
+    trip['start_date_month'] = trip.start_date.dt.month
+    trip['start_date_hour'] = trip.start_date.dt.hour
+
+    trip.drop(['start_station_name','end_station_name','id','start_date',
+        'end_date','end_station_id','zip_code'],inplace=True,axis=1)
+
+    return trip
