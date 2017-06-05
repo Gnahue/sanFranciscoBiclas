@@ -9,3 +9,5 @@ prediccion/Data/hs_err_pid6836.log
 prediccion/Data/pruebas.ipynb
 Analisis Exploratorio/hs_err_pid4915.log
 *.pyc
+prediccion/Data/test.csv
+prediccion/Data/train.csv
