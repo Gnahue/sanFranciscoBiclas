@@ -3,6 +3,11 @@ import numpy as np
 import os.path
 
 def dataImport():
+
+
+    # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
+
+
     file_train = "../Data/train.csv"
     file_test = "../Data/test.csv"
     exist_file_train = os.path.isfile(file_train)
