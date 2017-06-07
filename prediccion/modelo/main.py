@@ -7,7 +7,7 @@ def get_predictions(df_test, tree):
 	
 	# controlamos el csv test y esta bien indezado,
 	# por eso podemos hacer esto:	
-	for i in range (0,len(df_test):
+	for i in range (0,len(df_test)):
 		df_register = df_test.ix[i:i]
 		# TODO: Ir guardandolo directamente en un csv
 		# por ahora se guarda en results como: (id , prediccion)
@@ -19,6 +19,6 @@ def main():
 
 	(train,test) = dataImport.dataImport()
 
-	tree = build_tree.build_tree(train, 'duration', 4, 5)
+	tree = build_tree.build_tree(train, 'duration', 4, 2)
 
 	results = get_predictions(test, tree)	

@@ -53,6 +53,8 @@ def get_split(df,target,n_columns):
     max_std_column_name = max(stds_columns,key=lambda item:item[1])[0]
     
     # Devolvemos el nombre de la columna con mayor diferencia de std
+    print max_std_column_name
+
     return max_std_column_name
 
 
@@ -124,7 +126,7 @@ class Node(object):
         nodes = []
         nodes_feature = get_split(df,self.target, 4)
         unique_values = df[nodes_feature].unique()
-        
+        print nodes_feature
         for value_condition in unique_values:
             nodes.append(self.create_node(df, nodes_feature, value_condition))
     
@@ -147,6 +149,10 @@ class Root(object):
         # que tenga solo aquellos registros que cumplan
         # la condicion 
         df_partition = df.loc[df[self.feature] == value_condition]
+
+        if len(df_partition) == 1:
+            return Leaf(df[self.target].mean())
+
         return (Node(df_partition, self.target, self.feature, value_condition,1))
     
     def build_nodes(self, df):
@@ -206,4 +212,4 @@ def build_tree(df, target, n_columns, max_depth):
 train = pd.read_csv('../Data/youtube.csv')  
 
 tree = Tree(train,'hours',4,2) #esto es para bagging
-# tree.print_leafs()
+tree.print_leafs()
