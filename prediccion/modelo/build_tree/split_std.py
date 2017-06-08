@@ -33,7 +33,7 @@ def final_stds(stds_columns,target_std):
 def get_nrandom_columns(df,target,n_columns):
     columns_name = df.columns.tolist()
     columns_name.remove(target)
-    return [ columns_name[i] for i in sorted(random.sample(xrange(len(columns_name)), n_columns)) ]
+    return [ columns_name[i] for i in sorted(random.sample(range(len(columns_name)), n_columns)) ]
 
 def get_split(df,target,n_columns):
     # Calculo std de la variable a predecir
