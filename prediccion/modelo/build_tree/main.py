@@ -26,7 +26,11 @@ def main():
 
     tree = Tree(train, 'hours', 4, 3)  # esto es para bagging
 
-    tree.print_leafs()
+    # tree.print_leafs()
+
+    prediction = tree.get_prediction(train.ix[12:12])
+    print prediction
+
 
 
 main()
