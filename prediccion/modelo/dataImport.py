@@ -81,6 +81,13 @@ def transform_data_weather(weather):
     weather.drop(['max_gust_speed_mph'],inplace=True,axis=1)
     #weather.dropna(inplace=True)
 
+    # Para valores faltantes
+    # Podria reemplazarse por un valor aleatorio de otro campo o usar la media (o mediana)
+    #weather.max_temperature_f = weather.max_temperature_f.fillna(weather.max_temperature_f.median())
+    weather.mean_temperature_f = weather.mean_temperature_f.fillna(weather.mean_temperature_f.median())
+    #weather.min_temperature_f = weather.min_temperature_f.fillna(weather.min_temperature_f.median())
+    weather.precipitation_inches = weather.precipitation_inches.fillna(weather.precipitation_inches.median())
+
     # Son auxiliares para poder hacer el merge con trip
     weather['year'] = weather.date.dt.year
     weather['month'] = weather.date.dt.month
