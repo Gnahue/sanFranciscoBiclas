@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os.path
 
-def dataImport():
+def data_import():
 
 
     # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
