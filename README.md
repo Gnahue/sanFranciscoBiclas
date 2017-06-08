@@ -7,9 +7,9 @@ Tp Organización de datos 1°C 2017 FIUBA
 * Enunciado del Trabajo Práctico:
 [Docs](https://docs.google.com/document/d/1JBXaEtiopp5Ot4YLqvym8eldOcmamZRqJgulLp-DViI/edit)
 ### Integrantes:
+*  Maximiliano Burastero
 *  Nahuel Galván
 *  María Florencia Prado
-*  Maximiliano Burastero
 *  Pablo Prieto
 
 
