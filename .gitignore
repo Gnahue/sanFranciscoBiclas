@@ -11,3 +11,4 @@ Analisis Exploratorio/hs_err_pid4915.log
 *.pyc
 prediccion/Data/test.csv
 prediccion/Data/train.csv
+.idea

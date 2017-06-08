@@ -1,13 +1,12 @@
-import random
 from classes import *
-import pandas as pd
 import numpy as np
+
 
 def std_value(df,column_name,value,target):
     # Retorna el valor del desvio standar de una columna contra la de target
-    std = np.std(df.loc[train[column_name]==value,target].values.flatten())
+    std = np.std(df.loc[df[column_name]==value,target].values.flatten())
     len = df[column_name].count()
-    len_value = df.loc[train[column_name]==value,target].count()
+    len_value = df.loc[df[column_name]==value,target].count()
     prob = float(len_value)/len
     return std*prob
 
@@ -56,19 +55,3 @@ def get_split(df,target,n_columns):
     # Devolvemos el nombre de la columna con mayor diferencia de std
     return max_std_column_name
 
-def build_tree(df, target, n_columns, max_depth):
-    # target = nombre de la columna a predecir
-    # n_columns =  cantidad de columnas random a considerar en cada split
-    # n_columns < len(df.columns)!!!
-    # para bagging n_columns = len(df.columns) - 1
-    # es decir que termina tomando todas las columnas
-    
-    tree = Tree(df, target, n_columns, max_depth)
-    
-    return tree
-        
-
-
-# train = pd.read_csv('../Data/youtube.csv')        
-# tree = build_tree(train,'hours',(len(train.columns)-1),5) #esto es para bagging
-# tree.print_leafs()
