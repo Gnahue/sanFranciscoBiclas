@@ -55,13 +55,3 @@ def get_split(df,target,n_columns):
     # Devolvemos el nombre de la columna con mayor diferencia de std
     return max_std_column_name
 
-def build_tree(df, target, n_columns, max_depth):
-    # target = nombre de la columna a predecir
-    # n_columns =  cantidad de columnas random a considerar en cada split
-    # n_columns < len(df.columns)!!!
-    # para bagging n_columns = len(df.columns) - 1
-    # es decir que termina tomando todas las columnas
-    
-    tree = Tree(df, target, n_columns, max_depth)
-    
-    return tree

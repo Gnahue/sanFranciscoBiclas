@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 
-from build_tree import *
+from split_std import *
 
 
 class Leaf(object):
@@ -128,11 +128,16 @@ class Root(object):
 
 class Tree(object):
 
+
     def __init__(self, df, target, n_columns, max_depth):
-    
+        # target = nombre de la columna a predecir
+        # n_columns =  cantidad de columnas random a considerar en cada split
+        # n_columns < len(df.columns)!!!
+        # para bagging n_columns = len(df.columns) - 1
+        # es decir que termina tomando todas las columnas
+
         # seteamos la variable de clase max_depth
         Node.max_depth = max_depth
-
         self.root = Root(df,target,n_columns)
 
     def get_prediction(self, df_register):

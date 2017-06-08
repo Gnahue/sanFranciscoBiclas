@@ -5,7 +5,7 @@ import pandas as pd
 def get_predictions(df_test, tree):
     results = []
 
-    # controlamos el csv test y esta bien indezado,
+    # controlamos el csv test y esta bien indexado,
     # por eso podemos hacer esto:
     for i in range(0, len(df_test)):
         df_register = df_test.ix[i:i]
