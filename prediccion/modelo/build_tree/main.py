@@ -1,13 +1,17 @@
 from classes import Tree
 import pandas as pd
 from data_import import data_import
+import pickle
+
 
 
 def get_tree_prediction(df_test, tree):
     prediction = []
 
-    for i in range(0, len(df_test)):
+    # for i in range(0, len(df_test)):
+    for i in range(0, 10):
         df_register = df_test.ix[i:i]
+        print df_register.head()
 
         # por ahora se guarda en results como: (id , prediccion)
         prediction.append((df_register.id.values[0], tree.get_prediction(df_register)))
@@ -30,7 +34,6 @@ def build_trees(n, train, target, n_random_columns, max_depth):
     trees = []
     for i in range(0, n):
         trees.append(Tree(train, target, n_random_columns, max_depth))
-
     return trees
 
 
@@ -39,24 +42,42 @@ def build_bagging_trees(n, train, target, max_depth):
     return build_trees(n, train, target, (len(train.columns) - 1), max_depth)
 
 
+def serialize_tree(tree, file_name):
+    output = open(file_name,'wb')
+    pickle.dump(tree, output)
+    output.close()
+
+def desserialize_tree(file_name):
+    pkl_file = open(file_name, 'rb')
+    return pickle.load(pkl_file)
+
+
 def main():
-    # (train, test) = data_import()
+    (train, test) = data_import()
 
-    # tree = Tree(train, 'duration', 4, 2)
+    train.drop(['bike_id', 'mean_temperature_f', 'precipitation_inches'], inplace=True, axis=1)
+    test.drop(['bike_id', 'mean_temperature_f', 'precipitation_inches'], inplace=True, axis=1)
 
-    # results = get_predictions(test, tree)
+    tree = Tree(train, 'duration', 2, 2)
 
-    train = pd.read_csv('../../Data/youtube_train.csv')
-    test = pd.read_csv('../../Data/youtube_test.csv')
+    serialize_tree(tree, 'tree2.pkl')
 
-    tree = Tree(train, 'hours', 2, 3)
+    # results = get_tree_prediction(test, tree)
 
-    results = get_tree_prediction(test, tree)
+    # train = pd.read_csv('../../Data/youtube_train.csv')
+    # test = pd.read_csv('../../Data/youtube_test.csv')
+    #
+    # tree = Tree(train, 'hours', 2, 3)
+    #
+    # results = get_tree_prediction(test, tree)
 
     # tree.print_leafs()
     # prediction = tree.get_prediction(train.ix[5:5])
 
-    print results
+    # print results
 
 
-main()
+# main()
+
+(train, test) = data_import()
+print get_tree_prediction(test, desserialize_tree('tree.pkl'))

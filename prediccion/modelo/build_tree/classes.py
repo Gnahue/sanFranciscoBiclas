@@ -25,6 +25,7 @@ class Node(object):
     max_depth = 0
 
     def __init__(self, df, target, feature, value_condition, depth):
+        print depth
         self.target = target
         self.feature = feature
         self.value_condition = value_condition
@@ -47,7 +48,6 @@ class Node(object):
         # si is_range = true, value_condition es una tupla
         # entonces es el rango que deben cumplir los 
         # valores del feature para cada registro
-
         df_partition = df.loc[df[feature] == value_condition]
         return (Node(df_partition, self.target, feature, value_condition, (self.depth + 1)))
 
