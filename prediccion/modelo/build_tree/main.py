@@ -5,31 +5,32 @@ import pandas as pd
 def get_predictions(df_test, tree):
     results = []
 
-    # controlamos el csv test y esta bien indexado,
-    # por eso podemos hacer esto:
     for i in range(0, len(df_test)):
         df_register = df_test.ix[i:i]
         # TODO: Ir guardandolo directamente en un csv
         # por ahora se guarda en results como: (id , prediccion)
-        results.append((df_register.id.unique()[0], tree.get_prediction(df_register)))
+        results.append((df_register.id.values[0], tree.get_prediction(df_register)))
+
     return results
 
 
 def main():
-    # (train,test) = dataImport.dataImport()
+    # (train,test) = data_import.data_import()
 
-    # tree = build_tree.build_tree(train, 'duration', 4, 2)
+    # tree = Tree(train, 'duration', 4, 2)
 
     # results = get_predictions(test, tree)
 
-    train = pd.read_csv('../../Data/youtube.csv')
+    train = pd.read_csv('../../Data/youtube_train.csv')
+    test = pd.read_csv('../../Data/youtube_test.csv')
 
-    tree = Tree(train, 'hours', 4, 3)  # esto es para bagging
+    tree = Tree(train, 'hours', 2, 6)  # esto es para bagging
 
+    results = get_predictions(test, tree)
     # tree.print_leafs()
 
-    prediction = tree.get_prediction(train.ix[12:12])
-    print prediction
+    # prediction = tree.get_prediction(train.ix[5:5])
+    print results
 
 
 
