@@ -61,7 +61,8 @@ def transform_data_trip(trip, station, weather):
     #print len(trip)
     trip = pd.merge(trip, weather, how='left',left_on=['city','start_date_year','start_date_month',
         'start_date_day'], right_on=['city','year','month','day'])
-    trip.drop(['start_date_year','start_date_day','year','month','day'], inplace=True, axis=1)
+    trip.drop(['start_date_year','start_date_day','year','month','day','id_y'], inplace=True, axis=1)
+    trip.rename(columns={'id_x': 'id'}, inplace=True)
     #print len(trip)
     return trip
 
@@ -101,5 +102,11 @@ def transform_data_weather(weather):
 
     weather = pd.merge(weather, city_zip_codes, how='inner', on='zip_code')
     weather.drop(['zip_code','date'],inplace=True,axis=1)
+
+    weather.drop(['max_temperature_f','min_temperature_f','max_dew_point_f','mean_dew_point_f',
+        'min_dew_point_f','max_humidity','mean_humidity','min_humidity','max_sea_level_pressure_inches',
+        'mean_sea_level_pressure_inches','min_sea_level_pressure_inches','max_visibility_miles',
+        'mean_visibility_miles','min_visibility_miles','max_wind_Speed_mph','mean_wind_speed_mph',
+        'cloud_cover','wind_dir_degrees','events'],inplace=True,axis=1)
 
     return weather
