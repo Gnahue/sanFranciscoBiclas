@@ -3,11 +3,6 @@ import numpy as np
 import os.path
 
 def data_import():
-
-
-    # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
-
-
     file_train = "../../Data/train.csv"
     file_test = "../../Data/test.csv"
     exist_file_train = os.path.isfile(file_train)
@@ -63,7 +58,13 @@ def transform_data_trip(trip, station, weather):
         'start_date_day'], right_on=['city','year','month','day'])
     trip.drop(['start_date_year','start_date_day','year','month','day','id_y'], inplace=True, axis=1)
     trip.rename(columns={'id_x': 'id'}, inplace=True)
-    #print len(trip)
+
+    trip.city.replace(to_replace='San Francisco', value=0, inplace=True)
+    trip.city.replace(to_replace='San Jose', value=1, inplace=True)
+    trip.city.replace(to_replace='Redwood City', value=2, inplace=True)
+    trip.city.replace(to_replace='Mountain View', value=3, inplace=True)
+    trip.city.replace(to_replace='Palo Alto', value=4, inplace=True)
+
     return trip
 
 def transform_data_station(station):
