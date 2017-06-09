@@ -1,8 +1,36 @@
 \section{CONCLUSIONES}
-A conclusão deve conter os principais aspectos e contribuições de forma a finalizar o trabalho apresentado. Deve-se apresentar o que era esperado do trabalho através dos objetivos inseridos inicialmente e mostrar o que foi conseguido. 
+An interesting difference between regression and classification is that the
+correlation increases quite slowly as the number of features used increases. The
+major effect is the decrease in PE*( tree). Therefore, a relatively large number of
+features are required to reduce PE*(tree) and get near optimal test-set error.
+The results shown in Table 6 are mixed. Random forest-random features is
+always better than bagging. In data sets for which adaptive bagging gives sharp
+decreases in error, the decreases produced by forests are not as pronounced. In
+data sets in which adaptive bagging gives no improvements over bagging,
+forests produce improvements.
 
-	Não deve-se inserir um novo assunto na conclusão. Aqui o autor apresentará as próprias impressões sobre o trabalho efetuado. 
-    
-É importante também que sejam identificadas limitações e problemas que surgiram durante o desenvolvimento do trabalho e quais as consequências do mesmo.
 
-Os trabalhos futuros devem conter oportunidades de expansão do trabalho apresentado, bem como, novos projetos que puderam ser vislumbrados a partir do desenvolvimento do trabalho
+Random forests are an effective tool in prediction. Because of the Law of Large
+Numbers they do not overfit. Injecting the right kind of randomness makes
+them accurate classifiers and regressors. Furthermore, the framework in terms
+of strength of the individual predictors and their correlations gives insight into
+the ability of the random forest to predict. Using out-of-bag estimation makes
+concrete the otherwise theoretical values of strength and correlation.
+For a while, the conventional thinking was that forests could not compete with
+arcing type algorithms in terms of accuracy. Our results dispel this belief, but
+lead to interesting questions. Boosting and arcing algorithms have the ability to
+reduce bias as well as variance (Schapire et al [1998]). The adaptive bagging
+algorithm in regression (Breiman [1999]) was designed to reduce bias and
+operates effectively in classification as well as in regression. But, like arcing, it
+also changes the training set as it progresses.
+Forests give results competitive with boosting and adaptive bagging, yet do not
+progressively change the training set. Their accuracy indicates that they act to
+reduce bias. The mechanism for this is not obvious. Random forests may also
+be viewed as a Bayesian procedure. Although I doubt that this is a fruitful line
+of exploration, if it could explain the bias reduction, I might become more of a
+Bayesian.
+Random inputs and random features produce good results in classification--less
+so in regression. The only types of randomness used in this study is bagging and
+random features. It may well be that other types of injected randomness give
+better results. For instance, one of the referees has suggested use of random
+Boolean combinations of feature
