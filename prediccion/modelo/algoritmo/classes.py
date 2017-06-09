@@ -12,7 +12,7 @@ class Leaf(object):
         return self.value
 
     def print_leafs(self):
-        print self.value
+        print (self.value)
 
     def comply_condition(self, df_register):
         return True
@@ -25,7 +25,7 @@ class Node(object):
     max_depth = 0
 
     def __init__(self, df, target, feature, value_condition, depth):
-        print depth
+        # print (depth)
         self.target = target
         self.feature = feature
         self.value_condition = value_condition
