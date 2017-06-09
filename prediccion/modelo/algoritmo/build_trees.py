@@ -23,13 +23,13 @@ def main():
 
     (train,test) = data_import()
 
-    train.drop(['id'], inplace=True, axis=1)
+    train.drop(['id', 'bike_id'], inplace=True, axis=1)
 
-    n = 2 # cantidad de arboles a crear
+    n = 1 # cantidad de arboles a crear
 
     sample_size = int(round(len(train) / n)) # sample with replacement
 
-    max_depth = 20 # estudiar cual es la profundidad que funciona mejor
+    max_depth = 10 # estudiar cual es la profundidad que funciona mejor
 
     trees = build_bagging_trees(n, train, 'duration', max_depth, sample_size)
 
