@@ -1,0 +1,32 @@
+digraph Tree {
+node [shape=box] ;
+0 [label="subscription_type <= 1.5\nmse = 7905771.5691\nsamples = 100\nvalue = 1155.03"] ;
+1 [label="start_date_hour <= 7.5\nmse = 84375.5878\nsamples = 78\nvalue = 498.2308"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="start_date_month <= 6.5\nmse = 185380.04\nsamples = 10\nvalue = 766.6"] ;
+1 -> 2 ;
+3 [label="mse = 183365.04\nsamples = 5\nvalue = 1033.6"] ;
+2 -> 3 ;
+4 [label="mse = 44817.04\nsamples = 5\nvalue = 499.6"] ;
+2 -> 4 ;
+5 [label="bike_id <= 275.0\nmse = 57372.9446\nsamples = 68\nvalue = 458.7647"] ;
+1 -> 5 ;
+6 [label="mse = 77062.7344\nsamples = 8\nvalue = 648.375"] ;
+5 -> 6 ;
+7 [label="mse = 49314.8831\nsamples = 60\nvalue = 433.4833"] ;
+5 -> 7 ;
+8 [label="start_date_month <= 2.5\nmse = 28684099.4897\nsamples = 22\nvalue = 3483.6818"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="start_date_weekday <= 1.0\nmse = 35070464.2222\nsamples = 3\nvalue = 9514.6667"] ;
+8 -> 9 ;
+10 [label="mse = 0.0\nsamples = 1\nvalue = 1195.0"] ;
+9 -> 10 ;
+11 [label="mse = 693056.25\nsamples = 2\nvalue = 13674.5"] ;
+9 -> 11 ;
+12 [label="bike_id <= 530.5\nmse = 21025855.2964\nsamples = 19\nvalue = 2531.4211"] ;
+8 -> 12 ;
+13 [label="mse = 2781705.3067\nsamples = 15\nvalue = 1499.6"] ;
+12 -> 13 ;
+14 [label="mse = 70477256.1875\nsamples = 4\nvalue = 6400.75"] ;
+12 -> 14 ;
+}
