@@ -87,7 +87,10 @@ def transform_data_weather(weather):
     #weather.max_temperature_f = weather.max_temperature_f.fillna(weather.max_temperature_f.median())
     weather.mean_temperature_f = weather.mean_temperature_f.fillna(weather.mean_temperature_f.median())
     #weather.min_temperature_f = weather.min_temperature_f.fillna(weather.min_temperature_f.median())
-    weather.precipitation_inches = weather.precipitation_inches.fillna(weather.precipitation_inches.median())
+    
+    weather.precipitation_inches.fillna(0, inplace=True)
+    weather['precipitation_inches'] = weather['precipitation_inches'].apply(convert_precipitation_inches)
+    weather['mean_temperature_f'] = weather['mean_temperature_f'].apply(convert_mean_temperature_f)
 
     # Son auxiliares para poder hacer el merge con trip
     weather['year'] = weather.date.dt.year
@@ -110,3 +113,25 @@ def transform_data_weather(weather):
         'cloud_cover','wind_dir_degrees','events'],inplace=True,axis=1)
 
     return weather
+
+
+def convert_precipitation_inches(precipitation):
+    # Los valores que estan en T los manda a 
+    #if precipitation.isdigit():
+    try:
+        precipitation = float(precipitation)
+    except ValueError:
+        None
+    if (precipitation >= 0) and (precipitation < 0.672):
+        return 1
+    elif (precipitation >= 0.672) and (precipitation < 1.344):
+        return 2
+    elif (precipitation >= 1.344) and (precipitation < 2.016):
+        return 3
+    elif (precipitation >= 2.016) and (precipitation <= 3.37):
+        return 4
+    elif (precipitation == 'T'):
+        return 0
+
+def convert_mean_temperature_f(temperature):
+    return int((temperature - 38) / 4.6)
