@@ -2,40 +2,39 @@ import pandas as pd
 import numpy as np
 import os.path
 
-def data_import():
-
-
-    # train["Age"] = train["Age"].fillna(train["Age"].median())  para valores faltantes
-
-
-    file_train = "../../Data/train.csv"
+def get_test():
     file_test = "../../Data/test.csv"
-    exist_file_train = os.path.isfile(file_train)
     exist_file_test = os.path.isfile(file_test)
 
-
-    if (not exist_file_train) or (not exist_file_test):
+    if not exist_file_test:
         weather = pd.read_csv("../../Data/weather.csv")
         weather = transform_data_weather(weather)
         station = pd.read_csv("../../Data/station.csv")
         station = transform_data_station(station)
-
-
-    if not exist_file_train:
-        trip_train = pd.read_csv("../../Data/trip_train.csv")
-        trip_train = transform_data_trip(trip_train, station, weather)
-        trip_train.to_csv(file_train, index=False)
-    else:
-        trip_train = pd.read_csv(file_train)
-    
-    if not exist_file_test:
         trip_test = pd.read_csv("../../Data/trip_test.csv")
         trip_test = transform_data_trip(trip_test, station, weather)
         trip_test.to_csv(file_test, index=False)
     else:
         trip_test = pd.read_csv(file_test)
 
-    return (trip_train,trip_test)
+    return trip_test
+
+def get_train():
+    file_train = "../../Data/train.csv"
+    exist_file_train = os.path.isfile(file_train)
+
+    if not exist_file_train:
+        weather = pd.read_csv("../../Data/weather.csv")
+        weather = transform_data_weather(weather)
+        station = pd.read_csv("../../Data/station.csv")
+        station = transform_data_station(station)
+        trip_train = pd.read_csv("../../Data/trip_train.csv")
+        trip_train = transform_data_trip(trip_train, station, weather)
+        trip_train.to_csv(file_train, index=False)
+    else:
+        trip_train = pd.read_csv(file_train)
+
+    return trip_train
 
 
 def transform_data_trip(trip, station, weather):
@@ -63,7 +62,13 @@ def transform_data_trip(trip, station, weather):
         'start_date_day'], right_on=['city','year','month','day'])
     trip.drop(['start_date_year','start_date_day','year','month','day','id_y'], inplace=True, axis=1)
     trip.rename(columns={'id_x': 'id'}, inplace=True)
-    #print len(trip)
+
+    trip.city.replace(to_replace='San Francisco', value=0, inplace=True)
+    trip.city.replace(to_replace='San Jose', value=1, inplace=True)
+    trip.city.replace(to_replace='Redwood City', value=2, inplace=True)
+    trip.city.replace(to_replace='Mountain View', value=3, inplace=True)
+    trip.city.replace(to_replace='Palo Alto', value=4, inplace=True)
+
     return trip
 
 def transform_data_station(station):
@@ -87,7 +92,10 @@ def transform_data_weather(weather):
     #weather.max_temperature_f = weather.max_temperature_f.fillna(weather.max_temperature_f.median())
     weather.mean_temperature_f = weather.mean_temperature_f.fillna(weather.mean_temperature_f.median())
     #weather.min_temperature_f = weather.min_temperature_f.fillna(weather.min_temperature_f.median())
-    weather.precipitation_inches = weather.precipitation_inches.fillna(weather.precipitation_inches.median())
+    
+    weather.precipitation_inches.fillna(0, inplace=True)
+    weather['precipitation_inches'] = weather['precipitation_inches'].apply(convert_precipitation_inches)
+    weather['mean_temperature_f'] = weather['mean_temperature_f'].apply(convert_mean_temperature_f)
 
     # Son auxiliares para poder hacer el merge con trip
     weather['year'] = weather.date.dt.year
@@ -110,3 +118,25 @@ def transform_data_weather(weather):
         'cloud_cover','wind_dir_degrees','events'],inplace=True,axis=1)
 
     return weather
+
+
+def convert_precipitation_inches(precipitation):
+    # Los valores que estan en T los manda a 
+    #if precipitation.isdigit():
+    try:
+        precipitation = float(precipitation)
+    except ValueError:
+        None
+    if (precipitation >= 0) and (precipitation < 0.672):
+        return 1
+    elif (precipitation >= 0.672) and (precipitation < 1.344):
+        return 2
+    elif (precipitation >= 1.344) and (precipitation < 2.016):
+        return 3
+    elif (precipitation >= 2.016) and (precipitation <= 3.37):
+        return 4
+    elif (precipitation == 'T'):
+        return 0
+
+def convert_mean_temperature_f(temperature):
+    return int((temperature - 38) / 4.6)
