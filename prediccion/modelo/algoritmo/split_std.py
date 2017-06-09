@@ -14,8 +14,10 @@ def calculate_std(df,column_name,target,result, index):
     # calcula los valores de desvio standar para cada columna
     stds = 0
     unique_values = df[column_name].unique()
+    print column_name
     for value in unique_values:
         stds +=  std_value(df,column_name,value,target)
+    print column_name + ' '+str(stds)
     result[index] =(column_name, stds)
 
 def calculate_stds(df,columns_name,target):
@@ -26,9 +28,10 @@ def calculate_stds(df,columns_name,target):
 
         threads[i] = Thread(target=calculate_std, args=(df,columns_name[i],target,stds,i))
         threads[i].start()
-
     for i in range(0,len(columns_name)):
         threads[i].join()
+
+    print stds
     return stds
         
 def final_stds(stds_columns,target_std):
