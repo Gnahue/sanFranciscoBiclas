@@ -1,6 +1,7 @@
 from classes import Tree
 from serialization import serialize_tree
-from data_import import get_train
+# from data_import import get_train
+import pandas as pd
 
 def build_trees(n, train, target, n_random_columns, max_depth, sample_size):
     trees = []
@@ -17,20 +18,26 @@ def build_bagging_trees(n, train, target, max_depth, sample_size):
 
 def main():
 
-    train = get_train()
+    # train = get_train()
+
+    train =  pd.read_csv("../../Data/youtube_train.csv")
 
     n = 10 # cantidad de arboles a crear
 
-    sample_size = int(round(len(train) / n)) # sample with replacement
+    # sample_size = int(round(len(train) / n)) # sample with replacement
 
     max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    trees = build_bagging_trees(n, train, 'duracion', max_depth, sample_size)
+    trees = build_bagging_trees(n, train, 'hours', max_depth, 13)
 
-    i = 0
     for tree in trees:
-        serialize_tree(tree, (str(i) + 'BaggingFlorencia.pkl')) #poner cada uno su nombre
-        i += 1
+        print 'va'
+        tree.print_leafs()
+
+    # i = 0
+    # for tree in trees:
+    #     serialize_tree(tree, (str(i) + 'BaggingFlorencia.pkl')) #poner cada uno su nombre
+    #     i += 1
 
     # n_random_columns = int(round(len(train.columns) / 3))
     # # For regression a good default is: n_random_columns = features / 3

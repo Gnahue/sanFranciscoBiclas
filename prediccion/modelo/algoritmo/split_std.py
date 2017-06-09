@@ -1,6 +1,6 @@
 from classes import *
 import numpy as np
-
+from threading import Thread
 
 def std_value(df,column_name,value,target):
     # Retorna el valor del desvio standar de una columna contra la de target
@@ -10,18 +10,25 @@ def std_value(df,column_name,value,target):
     prob = float(len_value)/len
     return std*prob
 
-def calculate_std(df,column_name,target):
+def calculate_std(df,column_name,target,result, index):
     # calcula los valores de desvio standar para cada columna
     stds = 0
     unique_values = df[column_name].unique()
     for value in unique_values:
         stds +=  std_value(df,column_name,value,target)
-    return stds
+    result[index] =(column_name, stds)
 
 def calculate_stds(df,columns_name,target):
-    stds=[]
-    for column_name in columns_name:
-        stds.append((column_name,calculate_std(df,column_name,target)))
+    stds = [None] * len(columns_name)
+    threads = [None] * len(columns_name)
+
+    for i in range(0,len(columns_name)):
+
+        threads[i] = Thread(target=calculate_std, args=(df,columns_name[i],target,stds,i))
+        threads[i].start()
+
+    for i in range(0,len(columns_name)):
+        threads[i].join()
     return stds
         
 def final_stds(stds_columns,target_std):
