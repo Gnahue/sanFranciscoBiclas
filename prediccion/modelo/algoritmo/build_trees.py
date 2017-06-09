@@ -1,8 +1,6 @@
 from classes import Tree
 from serialization import serialize_tree
-# from data_import import get_train
-from data_import import data_import
-import pandas as pd
+from data_import import get_train
 
 def build_trees(n, train, target, n_random_columns, max_depth, sample_size):
     trees = []
@@ -20,9 +18,7 @@ def build_bagging_trees(n, train, target, max_depth, sample_size):
 
 def main():
 
-    # train = get_train()
-
-    (train,test) = data_import()
+    train = get_train()
 
     train.drop(['id', 'bike_id', 'mean_temperature_f', 'precipitation_inches'], inplace=True, axis=1)
 

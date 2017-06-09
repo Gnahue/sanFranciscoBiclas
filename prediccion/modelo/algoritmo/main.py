@@ -1,7 +1,7 @@
 from serialization import desserialize_tree
 from predictions import get_trees_prediction
 from predictions import write_csv
-from data_import import data_import
+from data_import import get_test
 
 
 def main():
@@ -20,9 +20,8 @@ def main():
     # for i in range(0, 25):
     #     trees.append(desserialize_tree(str(i)+'Pablo.pkl'))
 
-    # test = get_test()
+    test = get_test()
 
-    (train, test) = data_import()
 
     test = test.head(1)
 
