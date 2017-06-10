@@ -9,7 +9,7 @@ def build_RF_trees(n, train, target, n_random_columns, max_depth, sample_size):
     for i in range(0, n):
         print ('CREANDO ARBOL ' + str(i) )
         ts = time.time()
-        print (datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'))
+        print (datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S'))
         tree = Tree(train.sample(sample_size), target, n_random_columns, max_depth)
         serialize_tree(tree, (str(i) + 'RFFlorencia.pkl'))
         print ('<------------------------------------ARBOL NUEVO = ' + str(i) + ' ------------------------------------>')
