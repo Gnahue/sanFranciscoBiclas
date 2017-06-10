@@ -34,6 +34,8 @@ def get_train():
     else:
         trip_train = pd.read_csv(file_train)
 
+    trip.drop(['id'],inplace=True,axis=1)
+
     return trip_train
 
 
@@ -53,7 +55,7 @@ def transform_data_trip(trip, station, weather):
     trip['start_date_day'] = trip.start_date.dt.day
 
     trip.drop(['start_station_name','end_station_name','end_date',
-        'end_station_id','zip_code','start_date'],inplace=True,axis=1)
+        'end_station_id','zip_code','start_date','bike_id'],inplace=True,axis=1)
     #print len(trip)
     trip = pd.merge(trip, station, how='inner', left_on='start_station_id', right_on='id')
     #trip.drop(['id'], inplace=True, axis=1)
