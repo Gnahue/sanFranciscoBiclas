@@ -8,17 +8,17 @@ def main():
 
     trees = [] #los 100 arboles creados
 
-    for i in range(0, 20):
-        trees.append(desserialize_tree(str(i)+'BaggingFlorencia.pkl'))
+    for i in range(0, 25):
+        trees.append(desserialize_tree(str(i)+'RFFlorencia.pkl'))
 
-    # for i in range(0, 25):
-    #     trees.append(desserialize_tree(str(i)+'Nahuel.pkl'))
-    #
-    # for i in range(0, 25):
-    #     trees.append(desserialize_tree(str(i)+'Maximiliano.pkl'))
-    #
-    # for i in range(0, 25):
-    #     trees.append(desserialize_tree(str(i)+'Pablo.pkl'))
+    for i in range(0, 25):
+        trees.append(desserialize_tree(str(i)+'RFNahuel.pkl'))
+
+    for i in range(0, 25):
+        trees.append(desserialize_tree(str(i)+'RFMaximiliano.pkl'))
+
+    for i in range(0, 25):
+        trees.append(desserialize_tree(str(i)+'RFPablo.pkl'))
 
     test = get_test()
 

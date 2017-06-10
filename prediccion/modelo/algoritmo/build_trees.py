@@ -21,7 +21,7 @@ def main():
     train = get_train()
 
 
-    n = 20 # cantidad de arboles a crear
+    n = 25 # cantidad de arboles a crear
 
     sample_size = int(round(len(train) / 4)) # sample with replacement
 
