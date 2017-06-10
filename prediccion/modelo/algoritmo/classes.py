@@ -21,7 +21,7 @@ class Leaf(object):
         return self.value
 
     def get_leafs_values(self):
-        return self.value
+        return [self.value]
 
     def tipo(self):
         print 'leaf'
@@ -51,13 +51,13 @@ class Node(object):
         leafs_values = []
 
         for node in self.nodes:
-            leafs_values.append(node.get_leafs_values())
+            leafs_values + node.get_leafs_values()
 
         return leafs_values
 
     def get_avg_leafs(self):
         leafs_values = []
-
+        print ('sacando promedio')
         for node in self.nodes:
             leafs_values.append(node.get_leafs_values())
 

@@ -27,7 +27,7 @@ def main():
 
     max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    trees = build_bagging_trees(n, train, 'duration', max_depth, 50`0)
+    trees = build_bagging_trees(n, train, 'duration', max_depth, 500)
     # trees = build_trees(n, train, 'duration', 3,max_depth, 1000)
 
     i = 0

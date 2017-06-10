@@ -34,7 +34,7 @@ def get_train():
     else:
         trip_train = pd.read_csv(file_train)
 
-    trip.drop(['id'],inplace=True,axis=1)
+    trip_train.drop(['id'],inplace=True,axis=1)
 
     return trip_train
 
