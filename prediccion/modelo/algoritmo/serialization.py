@@ -7,6 +7,7 @@ def serialize_tree(tree, file_name):
     output.close()
 
 def desserialize_tree(file_name):
+    print ('Desserializando arbol')
     pkl_file = open(file_name, 'rb')
     return pickle.load(pkl_file)
 

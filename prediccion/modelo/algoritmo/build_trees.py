@@ -12,7 +12,7 @@ def build_RF_trees(n, train, target, n_random_columns, max_depth, sample_size):
 
 
 def build_bagging_trees(n, train, target, max_depth, sample_size):
-    # toma todas las columnas para hacer el split
+    # toma todas las columnas para hacer el split =  bagging
     return build_RF_trees(n, train, target, (len(train.columns) - 1), max_depth, sample_size)
 
 
@@ -26,7 +26,7 @@ def main():
 
     max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    #build_bagging_trees(n, train, 'duration', max_depth, 5000)
+    # build_bagging_trees(n, train, 'duration', max_depth, 5000)
     build_RF_trees(n, train, 'duration', 3, max_depth, sample_size)
 
 

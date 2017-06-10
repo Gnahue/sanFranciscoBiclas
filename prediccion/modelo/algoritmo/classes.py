@@ -22,9 +22,6 @@ class Leaf(object):
     def get_leafs_values(self):
         return [self.value]
 
-    def graph(self):
-        print 'leaf'
-
 
 class Node(object):
     max_depth = 0
@@ -44,10 +41,8 @@ class Node(object):
 
     def get_leafs_values(self):
         leafs_values = []
-
         for node in self.nodes:
             leafs_values = leafs_values + node.get_leafs_values()
-
         return leafs_values
 
     def get_avg_leafs(self):
@@ -58,7 +53,6 @@ class Node(object):
         return df_register[self.feature].values[0] == self.value_condition
 
     def get_prediction(self, df_register):
-
         node = self.any_node_comply_condition(df_register)
         if not node:
             return self.get_avg_leafs()
@@ -67,12 +61,9 @@ class Node(object):
 
     def create_node(self, df, feature, value_condition):
         # value_condition es la condicion del nodo
-        # si es un valor numerico creo un nuevo df
-        # que tenga solo aquellos registros que cumplan
-        # la condicion, en este caso is_range = false
-        # si is_range = true, value_condition es una tupla
-        # entonces es el rango que deben cumplir los 
-        # valores del feature para cada registro
+        # creo un nuevo df que tenga solo aquellos
+        # registros que cumplan la condicion,
+
         df_partition = df.loc[df[feature] == value_condition]
         return (Node(df_partition, self.target, feature, value_condition, (self.depth + 1)))
 
@@ -106,11 +97,6 @@ class Node(object):
         for node in self.nodes:
             node.print_leafs()
 
-    def graph(self):
-        print self.depth
-        for node in self.nodes:
-            node.graph()
-
 
 class Root(object):
     def __init__(self, df, target, n_columns):
@@ -119,10 +105,6 @@ class Root(object):
         self.nodes = self.build_nodes(df)
 
     def create_node(self, df, value_condition):
-        # value_condition es la condicion del nodo
-        # si es un valor numerico creo un nuevo df
-        # que tenga solo aquellos registros que cumplan
-        # la condicion 
         df_partition = df.loc[df[self.feature] == value_condition]
 
         if len(df_partition) == 1:
@@ -157,10 +139,6 @@ class Root(object):
         for node in self.nodes:
             node.print_leafs()
 
-    def graph(self):
-        for node in self.nodes:
-            node.graph()
-
 
 class Tree(object):
     def __init__(self, df, target, n_columns, max_depth):
@@ -179,5 +157,3 @@ class Tree(object):
 
     def print_leafs(self):
         self.root.print_leafs()
-    def graph(self):
-        self.root.graph()

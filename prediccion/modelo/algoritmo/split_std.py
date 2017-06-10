@@ -14,10 +14,8 @@ def calculate_std(df,column_name,target,result, index):
     # calcula los valores de desvio standar para cada columna
     stds = 0
     unique_values = df[column_name].unique()
-    # print (column_name)
     for value in unique_values:
         stds +=  std_value(df,column_name,value,target)
-    # print (column_name + ' '+str(stds))
     result[index] =(column_name, stds)
 
 def calculate_stds(df,columns_name,target):
@@ -31,7 +29,6 @@ def calculate_stds(df,columns_name,target):
     for i in range(0,len(columns_name)):
         threads[i].join()
 
-    # print stds
     return stds
         
 def final_stds(stds_columns,target_std):
@@ -49,18 +46,18 @@ def get_split(df,target,n_columns):
     # Calculo std de la variable a predecir
     target_std = np.std(df.ix[:, target].tolist())
     
-    columns_name = get_nrandom_columns(df,target,n_columns)
+    columns_name = get_nrandom_columns(df, target, n_columns)
     
     # Calculamos la desviacion standard de cada columna:
     # Esto es: la sumatoria de (la probabilidad de cada uno de los distintos valores
     # de una columna * la desviacion standar del mismo) 
-    stds_columns = calculate_stds(df,columns_name,target)
+    stds_columns = calculate_stds(df, columns_name, target)
     
     # Restamos cada std de columna al std del target
-    stds_columns = final_stds(stds_columns,target_std)
+    stds_columns = final_stds(stds_columns, target_std)
 
     # Obtengo el maximo valor
-    max_std_column_name = max(stds_columns,key=lambda item:item[1])[0]
+    max_std_column_name = max(stds_columns, key=lambda item:item[1])[0]
     
     # Devolvemos el nombre de la columna con mayor diferencia de std
     return max_std_column_name

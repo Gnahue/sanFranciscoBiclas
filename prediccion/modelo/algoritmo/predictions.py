@@ -10,7 +10,6 @@ def get_tree_prediction(df_test, tree):
 
 
 def get_trees_prediction(df_test, trees):
-
     if len(trees) == 1:
         return get_tree_prediction(df_test, trees[0]).items()  #[(k, value)]
 
