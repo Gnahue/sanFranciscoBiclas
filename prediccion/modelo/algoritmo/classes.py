@@ -51,16 +51,13 @@ class Node(object):
         leafs_values = []
 
         for node in self.nodes:
-            leafs_values + node.get_leafs_values()
+            leafs_values = leafs_values + node.get_leafs_values()
 
         return leafs_values
 
     def get_avg_leafs(self):
-        leafs_values = []
-        print ('sacando promedio')
-        for node in self.nodes:
-            leafs_values.append(node.get_leafs_values())
-
+        leafs_values = self.get_leafs_values()
+        print leafs_values
         return (sum(leafs_values) / float(len(leafs_values)))
 
     def comply_condition(self, df_register):
@@ -186,3 +183,5 @@ class Tree(object):
 
     def print_leafs(self):
         self.root.print_leafs()
+    def graph(self):
+        self.root.graph()

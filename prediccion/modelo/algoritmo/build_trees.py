@@ -21,13 +21,13 @@ def main():
     train = get_train()
 
 
-    n = 6 # cantidad de arboles a crear
+    n = 2 # cantidad de arboles a crear
 
     sample_size = int(round(len(train) / n)) # sample with replacement
 
     max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    trees = build_bagging_trees(n, train, 'duration', max_depth, 500)
+    trees = build_bagging_trees(n, train, 'duration', max_depth, 5000)
     # trees = build_trees(n, train, 'duration', 3,max_depth, 1000)
 
     i = 0
