@@ -3,11 +3,9 @@ import csv
 
 def get_tree_prediction(df_test, tree):
     prediction = {}
-    print ("OBTENIENDO PREDICCION")
     for i in range(0, len(df_test)):
         df_register = df_test.ix[i:i]
         prediction[df_register.id.values[0]] = tree.get_prediction(df_register)
-        # print (prediction)
     return prediction
 
 

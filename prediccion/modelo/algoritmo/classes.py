@@ -7,7 +7,6 @@ from split_std import *
 class Leaf(object):
     def __init__(self, value):
         self.value = value
-
     def get_value(self):
         return self.value
 
@@ -23,7 +22,7 @@ class Leaf(object):
     def get_leafs_values(self):
         return [self.value]
 
-    def tipo(self):
+    def graph(self):
         print 'leaf'
 
 
@@ -31,15 +30,11 @@ class Node(object):
     max_depth = 0
 
     def __init__(self, df, target, feature, value_condition, depth):
-        # print (depth)
         self.target = target
         self.feature = feature
         self.value_condition = value_condition
         self.depth = depth
         self.nodes = self.build_nodes(df)
-
-    def tipo(self):
-        print 'nodo'
 
     def any_node_comply_condition(self, df_register):
         for node in self.nodes:
@@ -57,7 +52,6 @@ class Node(object):
 
     def get_avg_leafs(self):
         leafs_values = self.get_leafs_values()
-        print leafs_values
         return (sum(leafs_values) / float(len(leafs_values)))
 
     def comply_condition(self, df_register):
@@ -65,14 +59,10 @@ class Node(object):
 
     def get_prediction(self, df_register):
 
-        print 'prediciendo en nodo'
         node = self.any_node_comply_condition(df_register)
         if not node:
-            print ('NO HAY NODO QUE CUMPLA LA CONDICION')
             return self.get_avg_leafs()
         else:
-            print node.tipo()
-            print ('NODO CUMPLE CONDICION DE DF_REGISTER')
             return node.get_prediction(df_register)
 
     def create_node(self, df, feature, value_condition):
@@ -116,6 +106,11 @@ class Node(object):
         for node in self.nodes:
             node.print_leafs()
 
+    def graph(self):
+        print self.depth
+        for node in self.nodes:
+            node.graph()
+
 
 class Root(object):
     def __init__(self, df, target, n_columns):
@@ -156,14 +151,15 @@ class Root(object):
     def get_prediction(self, df_register):
         for node in self.nodes:
             if node.comply_condition(df_register):
-                print 'entro a un nodo de la raiz'
-                node.tipo()
                 return node.get_prediction(df_register)
-        print ('no entro en la raiz AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
     def print_leafs(self):
         for node in self.nodes:
             node.print_leafs()
+
+    def graph(self):
+        for node in self.nodes:
+            node.graph()
 
 
 class Tree(object):

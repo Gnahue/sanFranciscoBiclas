@@ -21,28 +21,28 @@ def main():
     train = get_train()
 
 
-    n = 2 # cantidad de arboles a crear
+    n = 20 # cantidad de arboles a crear
 
-    sample_size = int(round(len(train) / n)) # sample with replacement
+    sample_size = int(round(len(train) / 4)) # sample with replacement
 
     max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    trees = build_bagging_trees(n, train, 'duration', max_depth, 5000)
-    # trees = build_trees(n, train, 'duration', 3,max_depth, 1000)
+    # trees = build_bagging_trees(n, train, 'duration', max_depth, 5000)
+    trees = build_trees(n, train, 'duration', 3, max_depth, sample_size)
 
-    i = 0
-    for tree in trees:
-        serialize_tree(tree, (str(i) + 'BaggingFlorencia.pkl')) #poner cada uno su nombre
-        i += 1
+    # i = 0
+    # for tree in trees:
+    #     serialize_tree(tree, (str(i) + 'BaggingFlorencia.pkl')) #poner cada uno su nombre
+    #     i += 1
 
     # n_random_columns = int(round(len(train.columns) / 3))
     # # For regression a good default is: n_random_columns = features / 3
-    # trees = build_trees(n, train, 'duration', n_random_columns, max_depth, sample_size)
-    #
-    # i = 0
-    # for tree in trees:
-    #     serialize_tree(tree, (str(i) + 'RFFlorencia.pkl')) #poner cada uno su nombre
-    #     i += 1
+    trees = build_trees(n, train, 'duration', 3, max_depth, sample_size)
+
+    i = 0
+    for tree in trees:
+        serialize_tree(tree, (str(i) + 'RFFlorencia.pkl')) #poner cada uno su nombre
+        i += 1
 
 
 main()
