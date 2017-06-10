@@ -1,5 +1,5 @@
 1- cada uno debe crear sus 25 arboles, en build_trees.py
-en la linea 26 (serialize_tree(tree, (str(i) + 'RFFlorencia.pkl'))
+en la linea 10 (serialize_tree(tree, (str(i) + 'RFFlorencia.pkl'))
 cada uno cambie Florencia por su nombre
 2- al correr build_trees.py se van a crear los 25 arboles y se serializan
 3- hacer push de los 25 arboles creados (pushear los 25 .pkl creados)
