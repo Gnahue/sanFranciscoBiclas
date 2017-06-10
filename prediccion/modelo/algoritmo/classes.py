@@ -18,7 +18,13 @@ class Leaf(object):
         return True
 
     def get_prediction(self, df_register):
-            return self.value
+        return self.value
+
+    def get_leafs_values(self):
+        return self.value
+
+    def tipo(self):
+        print 'leaf'
 
 
 class Node(object):
@@ -32,13 +38,45 @@ class Node(object):
         self.depth = depth
         self.nodes = self.build_nodes(df)
 
+    def tipo(self):
+        print 'nodo'
+
+    def any_node_comply_condition(self, df_register):
+        for node in self.nodes:
+            if node.comply_condition(df_register):
+                return node
+        return None
+
+    def get_leafs_values(self):
+        leafs_values = []
+
+        for node in self.nodes:
+            leafs_values.append(node.get_leafs_values())
+
+        return leafs_values
+
+    def get_avg_leafs(self):
+        leafs_values = []
+
+        for node in self.nodes:
+            leafs_values.append(node.get_leafs_values())
+
+        return (sum(leafs_values) / float(len(leafs_values)))
+
     def comply_condition(self, df_register):
         return df_register[self.feature].values[0] == self.value_condition
 
     def get_prediction(self, df_register):
-        for node in self.nodes:
-            if node.comply_condition(df_register):
-                return node.get_prediction(df_register)
+
+        print 'prediciendo en nodo'
+        node = self.any_node_comply_condition(df_register)
+        if not node:
+            print ('NO HAY NODO QUE CUMPLA LA CONDICION')
+            return self.get_avg_leafs()
+        else:
+            print node.tipo()
+            print ('NODO CUMPLE CONDICION DE DF_REGISTER')
+            return node.get_prediction(df_register)
 
     def create_node(self, df, feature, value_condition):
         # value_condition es la condicion del nodo
@@ -121,7 +159,10 @@ class Root(object):
     def get_prediction(self, df_register):
         for node in self.nodes:
             if node.comply_condition(df_register):
+                print 'entro a un nodo de la raiz'
+                node.tipo()
                 return node.get_prediction(df_register)
+        print ('no entro en la raiz AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
     def print_leafs(self):
         for node in self.nodes:

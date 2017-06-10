@@ -20,20 +20,16 @@ def main():
 
     train = get_train()
 
-    train.drop(['id', 'bike_id', 'mean_temperature_f', 'precipitation_inches'], inplace=True, axis=1)
 
-    n = 20 # cantidad de arboles a crear
+
+    n = 6 # cantidad de arboles a crear
 
     sample_size = int(round(len(train) / n)) # sample with replacement
 
-    max_depth = 25 # estudiar cual es la profundidad que funciona mejor
+    max_depth = 20 # estudiar cual es la profundidad que funciona mejor
 
-    trees = build_bagging_trees(n, train, 'duration', max_depth, 500)
+    trees = build_bagging_trees(n, train, 'duration', max_depth, 50)
     # trees = build_trees(n, train, 'duration', 3,max_depth, 1000)
-
-    for tree in trees:
-        print 'va'
-        tree.print_leafs()
 
     i = 0
     for tree in trees:

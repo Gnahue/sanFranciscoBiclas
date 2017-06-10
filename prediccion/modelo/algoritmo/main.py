@@ -8,7 +8,7 @@ def main():
 
     trees = [] #los 100 arboles creados
 
-    for i in range(0, 20):
+    for i in range(0, 5):
         trees.append(desserialize_tree(str(i)+'BaggingFlorencia.pkl'))
 
     # for i in range(0, 25):
@@ -23,10 +23,9 @@ def main():
     test = get_test()
 
 
-    test = test.head(1)
+    test = test.head(100)
 
     #definir la particion del test
-
 
     write_csv(get_trees_prediction(test, trees))
 
