@@ -47,7 +47,7 @@ class Node(object):
 
     def get_avg_leafs(self):
         leafs_values = self.get_leafs_values()
-        return (sum(leafs_values) / float(len(leafs_values)))
+        return round((sum(leafs_values) / float(len(leafs_values))), 5)
 
     def comply_condition(self, df_register):
         return df_register[self.feature].values[0] == self.value_condition
@@ -113,13 +113,6 @@ class Root(object):
         return Node(df_partition, self.target, self.feature, value_condition, 1)
 
     def build_nodes(self, df):
-        # 1- definir cuantos nodos vamos a tener
-        # de acuerdo a la cantidad de distintos valores
-        # del feature
-
-        # 2- dividir el data frame y colocarlo 
-        # en el nodo que corresponda segun cada
-        # valor del feature de este nodo
 
         nodes = []
 
