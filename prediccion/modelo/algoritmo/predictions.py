@@ -28,7 +28,7 @@ def get_trees_prediction(df_test, trees):
     print ("Calculo del promedio de resultados")
 
     for key in predictions_sum:
-        predictions_sum[key] = (predictions_sum[key] / len(df_test))
+        predictions_sum[key] = (predictions_sum[key] / len(trees))
 
     return predictions_sum.items()
 
