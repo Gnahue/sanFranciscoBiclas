@@ -10,9 +10,11 @@ def get_tree_prediction(df_test, tree):
 
 
 def get_trees_prediction(df_test, trees):
+    
     if len(trees) == 1:
         return get_tree_prediction(df_test, trees[0]).items()  #[(k, value)]
 
+    print ("Prediciendo en el arbol: 0")
     predictions_sum = get_tree_prediction(df_test, trees[0])
 
     # predictions_sum = {id1: prediction, id2: prediction}
@@ -32,9 +34,10 @@ def get_trees_prediction(df_test, trees):
 
     return predictions_sum.items()
 
-def write_csv(results):
+def write_csv(results, file_name):
 
-    print ("Escribiendo results.csv")
-    with open('results.csv', 'wb') as csvfile:
+    print ("Escribiendo " + file_name)
+    with open(file_name, 'wb') as csvfile:
         writer = csv.writer(csvfile)
+        writer.writerows([('id','duration')])
         writer.writerows(results)

@@ -5,9 +5,10 @@ def get_dict(file_name):
     d = {}
 
     f = open(file_name, 'rb')
+    f.next() # saltea id, duration
     reader = csv.reader(f)
     for row in reader:
-        d[float(row[0])] = float(row[1])
+        d[int(row[0])] = int(round(float(row[1])))
 
     f.close()
 
@@ -21,21 +22,21 @@ def get_avg(dicts):
             d[key] += dicts[i][key]
 
     for key in d:
-        d[key] = d[key]/ len(dicts)
+        d[key] = (d[key]/ len(dicts))
 
     return d.items()
 
 def main():
     dicts = []
 
-    # get_dict crea dicts para cada results csv
-    # Ej: results0.csv, results1.csv, results2.csv
-    for i in range (0,3):
+    #get_dict crea dicts para cada results csv
+    #Ej: results0.csv, results1.csv, results2.csv
+    for i in range (0,8):
         dict_i = get_dict('results' + str(i) + '.csv')
         dicts.append(dict_i)
 
     # get_avg_dicts calcula el promedio de todos los csvs
-    # y escribe el resultado en results.csv
-    write_csv(get_avg(dicts))
+    # y escribe el resultado en csvs_avg.csv
+    write_csv(get_avg(dicts), 'csvs_avg.csv')
 
 main()
