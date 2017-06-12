@@ -11,7 +11,7 @@ def build_RF_trees(n, train, target, n_random_columns, max_depth, sample_size):
         ts = time.time()
         print (datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S'))
         tree = Tree(train.sample(sample_size), target, n_random_columns, max_depth)
-        serialize_tree(tree, (str(i) + 'RFFlorencia.pkl'))
+        serialize_tree(tree, (str(i) + 'RF_5_5.pkl'))
         print ('<------------------------------------ARBOL NUEVO = ' + str(i) + ' ------------------------------------>')
         print ('SE CREO EN: ' +  str((time.time()-ts) / 60) + 'MINUTOS')
 
@@ -25,14 +25,14 @@ def main():
 
     train = get_train()
 
-    n = 25 # cantidad de arboles a crear
+    n = 500 # cantidad de arboles a crear
 
     sample_size = int(round(len(train) / 4)) # sample with replacement
 
-    max_depth = 20 # estudiar cual es la profundidad que funciona mejor
+    max_depth = 5 # estudiar cual es la profundidad que funciona mejor
 
     # build_bagging_trees(n, train, 'duration', max_depth, 5000)
-    build_RF_trees(n, train, 'duration', 3, max_depth, sample_size)
+    build_RF_trees(n, train, 'duration', 5, max_depth, sample_size)
 
 
 main()
