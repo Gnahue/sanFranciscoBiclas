@@ -43,7 +43,7 @@ def build_bagging_trees(n, train, target, max_depth, sample_size):
 
 def main():
 
-    n = 1000 # cantidad de arboles a crear
+    n = 500 # cantidad de arboles a crear
 
     train = get_train()
 

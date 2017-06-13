@@ -3,7 +3,7 @@ from predictions import write_csv
 
 def get_dict(file_name):
     d = {}
-
+    print ('--------------> OBTENIENDO PREDICCION DE: '+ file_name)
     f = open(file_name, 'rb')
     f.next() # saltea id, duration
     reader = csv.reader(f)
@@ -14,29 +14,47 @@ def get_dict(file_name):
 
     return d
 
-def get_avg(dicts):
-    d = dicts[0]
+def get_avg(i_name, n):
+    d = get_dict(str(0)+ i_name)
 
-    for i in range(1, len(dicts)):
+    for i in range(1, n):
+        dict_i = get_dict(str(i)+ i_name)
         for key in d:
-            d[key] += dicts[i][key]
+            d[key] += dict_i[key]
 
     for key in d:
-        d[key] = (d[key]/ len(dicts))
+        d[key] = (d[key]/ n)
 
     return d.items()
 
+def get_avg_notebook(n):
+    # codigo para notebook
+    d = get_dict('../../modelo/algoritmo/' + str(0) + 'prediction.csv')
+
+    for i in range(1, n):
+        dict_i = get_dict('../../modelo/algoritmo/' + str(i) + 'prediction.csv')
+        for key in d:
+            print (dict_i[key])
+            d[key] += dict_i[key]
+
+    for key in d:
+        d[key] = (d[key]/ n)
+
+    return d.items()
+
+
 def main():
-    dicts = []
-
-    #get_dict crea dicts para cada results csv
-    #Ej: results0.csv, results1.csv, results2.csv
-    for i in range (0,8):
-        dict_i = get_dict('results' + str(i) + '.csv')
-        dicts.append(dict_i)
-
+    
+    n = 1000
+    # cantidad de predicciones que tenemos
+    i_name = 'prediction.csv' 
+    # nombre comun de los n csvs ej: 0prediction.csv, 1prediction.csv => prediction.csv
+    
+    avg = get_avg(i_name, n)
     # get_avg_dicts calcula el promedio de todos los csvs
+    
+    write_csv(avg, 'csvs_avg.csv')
     # y escribe el resultado en csvs_avg.csv
-    write_csv(get_avg(dicts), 'csvs_avg.csv')
 
-main()
+
+# main()
