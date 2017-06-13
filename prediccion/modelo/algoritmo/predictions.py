@@ -36,7 +36,7 @@ def get_trees_prediction(df_test, trees):
 
 def write_csv(results, file_name):
 
-    print ("Escribiendo " + file_name)
+    print ("--------------> ESCRIBIENDO " + file_name)
     with open(file_name, 'wb') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows([('id','duration')])

@@ -10,9 +10,6 @@ class Leaf(object):
     def get_value(self):
         return self.value
 
-    def print_leafs(self):
-        print (self.value)
-
     def comply_condition(self, df_register):
         return True
 
@@ -93,11 +90,6 @@ class Node(object):
 
         return nodes
 
-    def print_leafs(self):
-        for node in self.nodes:
-            node.print_leafs()
-
-
 class Root(object):
     def __init__(self, df, target, n_columns):
         self.target = target
@@ -128,10 +120,6 @@ class Root(object):
             if node.comply_condition(df_register):
                 return node.get_prediction(df_register)
 
-    def print_leafs(self):
-        for node in self.nodes:
-            node.print_leafs()
-
 
 class Tree(object):
     def __init__(self, df, target, n_columns, max_depth):
@@ -148,5 +136,3 @@ class Tree(object):
     def get_prediction(self, df_register):
         return self.root.get_prediction(df_register)
 
-    def print_leafs(self):
-        self.root.print_leafs()
