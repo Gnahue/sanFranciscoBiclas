@@ -34,7 +34,6 @@ def get_avg_notebook(n):
     for i in range(1, n):
         dict_i = get_dict('../../modelo/algoritmo/' + str(i) + 'prediction.csv')
         for key in d:
-            print (dict_i[key])
             d[key] += dict_i[key]
 
     for key in d:
@@ -45,7 +44,7 @@ def get_avg_notebook(n):
 
 def main():
     
-    n = 1000
+    n = 3
     # cantidad de predicciones que tenemos
     i_name = 'prediction.csv' 
     # nombre comun de los n csvs ej: 0prediction.csv, 1prediction.csv => prediction.csv
