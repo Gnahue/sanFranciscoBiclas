@@ -45,7 +45,7 @@ class Node(object):
 
     def get_median_leafs(self):
         leafs_values = self.get_leafs_values()
-        return round(np.median(np3.array(leafs_values)))
+        return round(np.median(np.array(leafs_values)))
 
     def comply_condition(self, df_register):
         return df_register[self.feature].values[0] == self.value_condition
