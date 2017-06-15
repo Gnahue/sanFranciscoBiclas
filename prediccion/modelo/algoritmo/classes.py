@@ -1,5 +1,6 @@
 import random
 import pandas as pd
+import numpy as np
 
 from split_std import *
 
@@ -42,9 +43,9 @@ class Node(object):
             leafs_values = leafs_values + node.get_leafs_values()
         return leafs_values
 
-    def get_avg_leafs(self):
+    def get_median_leafs(self):
         leafs_values = self.get_leafs_values()
-        return round((sum(leafs_values) / float(len(leafs_values))), 5)
+        return round(np.median(np3.array(leafs_values)))
 
     def comply_condition(self, df_register):
         return df_register[self.feature].values[0] == self.value_condition
@@ -52,7 +53,8 @@ class Node(object):
     def get_prediction(self, df_register):
         node = self.any_node_comply_condition(df_register)
         if not node:
-            return self.get_avg_leafs()
+            # print('CORTO LA PREDICCION EN PROFUNDIDAD: ' + str(self.depth) )
+            return self.get_median_leafs()
         else:
             return node.get_prediction(df_register)
 

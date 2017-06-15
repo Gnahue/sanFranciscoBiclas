@@ -35,6 +35,9 @@ def get_train():
         trip_train = pd.read_csv(file_train)
 
     trip_train.drop(['id'],inplace=True,axis=1)
+    trip_train = trip_train[trip_train.duration <= 655940]
+    trip_train = trip_train[trip_train.duration >59]
+    
 
     return trip_train
 
